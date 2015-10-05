@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -13,6 +15,10 @@ import android.widget.TextView;
 import com.facebook.Profile;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import appwars.appwise.be.appwars.AppListAdapter;
 import appwars.appwise.be.appwars.R;
 import appwars.appwise.be.appwars.fragments.AppListFragment;
 import appwars.appwise.be.appwars.fragments.TestFragment;
@@ -20,7 +26,7 @@ import appwars.appwise.be.appwars.fragments.TestFragment;
 public class MainActivity extends FragmentActivity {
     private String first_name;
     private String last_name;
-    FragmentPagerAdapter adapterViewPager;
+    private FragmentPagerAdapter adapterViewPager;
 
 
     @Override
@@ -98,7 +104,6 @@ public class MainActivity extends FragmentActivity {
         public CharSequence getPageTitle(int position) {
             return "Page " + position;
         }
-
     }
 
 }
