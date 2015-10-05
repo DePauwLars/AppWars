@@ -1,4 +1,4 @@
-package appwars.appwise.be.appwars;
+package appwars.appwise.be.appwars.utils;
 
 import android.app.Application;
 import android.content.Intent;

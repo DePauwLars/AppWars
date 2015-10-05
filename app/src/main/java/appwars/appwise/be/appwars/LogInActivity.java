@@ -1,13 +1,19 @@
 package appwars.appwise.be.appwars;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.parse.LogInCallback;
@@ -15,8 +21,12 @@ import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import appwars.appwise.be.appwars.activities.MainActivity;
 
 public class LogInActivity extends AppCompatActivity {
     private List<String> permissions;
@@ -28,11 +38,9 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         FacebookSdk.sdkInitialize(getApplicationContext());
-
         facebookLogInTextView = (TextView) findViewById(R.id.facebookLogInTextView);
         permissions = new ArrayList<>();
         addPermissionsToList();
-
 
     }
 
@@ -69,6 +77,8 @@ public class LogInActivity extends AppCompatActivity {
                     Log.d("MyApp", "User signed up and logged in through Facebook!");
                 } else {
                     Log.d("MyApp", "User logged in through Facebook!");
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -96,8 +106,6 @@ public class LogInActivity extends AppCompatActivity {
 
         permissions.add("public_profile");
         permissions.add("email");
-        permissions.add("first_name");
-        permissions.add("last_name");
         permissions.add("user_status");
         permissions.add("user_friends");
     }
