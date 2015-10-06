@@ -1,18 +1,33 @@
 package appwars.appwise.be.appwars.fragments;
 
+import android.content.Intent;
+
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.Collator;
 import java.util.ArrayList;
+
+import appwars.appwise.*;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import appwars.appwise.be.appwars.App;
 import appwars.appwise.be.appwars.AppListAdapter;
+import appwars.appwise.be.appwars.PackageInformation;
 import appwars.appwise.be.appwars.R;
 
 /**
@@ -24,7 +39,7 @@ public class AppListFragment extends Fragment {
     private RecyclerView appListRecyclerView;
     private RecyclerView.Adapter appListAdapter;
     private RecyclerView.LayoutManager appListLayoutLManager;
-    private List<String> apps;
+    private List<App> apps;
 
     public static AppListFragment newInstance(int page, String title) {
         AppListFragment fragmentFirst = new AppListFragment();
@@ -43,7 +58,8 @@ public class AppListFragment extends Fragment {
         appListRecyclerView = (RecyclerView) view.findViewById(R.id.app_list_recycler_view);
 
         apps = new ArrayList<>();
-        addAppsToList();
+        apps = getAllUserInstalledApps();
+
         appListLayoutLManager = new LinearLayoutManager(getContext());
         appListAdapter = new AppListAdapter(apps);
         appListRecyclerView.setLayoutManager(appListLayoutLManager);
@@ -52,21 +68,32 @@ public class AppListFragment extends Fragment {
         return view;
     }
 
-    public void addAppsToList() {
-        apps.add("blabla");
-        apps.add("dit en dat");
-        apps.add("test een twee drie");
-        apps.add("appnaam dit en dat");
-        apps.add("Rollercoaster tycoon");
-        apps.add("een of andere bankapp");
-        apps.add("google maps");
-        apps.add(" youtube app");
-        apps.add("De lijn");
-        apps.add("online brood smeren");
-        apps.add("remote control app");
-        apps.add("just-eat");
-        apps.add("grasgroeier 3000");
-        apps.add("what to wear today   ");
+    public List<App> getAllUserInstalledApps() {
+        PackageInformation pi = new PackageInformation(getContext());
+        pi.getInstalledApps(true);
+        List<App> retrievedApps = new ArrayList<>();
 
+        PackageInformation androidPackagesInfo = new PackageInformation(getContext());
+        ArrayList<PackageInformation.InfoObject> appsData = androidPackagesInfo.getInstalledApps(true);
+
+
+        int flags = PackageManager.GET_META_DATA |
+                PackageManager.GET_SHARED_LIBRARY_FILES |
+                PackageManager.GET_UNINSTALLED_PACKAGES;
+
+        PackageManager pm = getActivity().getPackageManager();
+        List<ApplicationInfo> applications = pm.getInstalledApplications(flags);
+
+        for (ApplicationInfo appInfo : applications) {
+            if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
+            } else {
+
+                String appName = (String) pm.getApplicationLabel(appInfo);
+                Drawable appIcon = appInfo.loadIcon(pm);
+                App app = new App(appName, appIcon);
+                retrievedApps.add(app);
+            }
+        }
+        return retrievedApps;
     }
 }
