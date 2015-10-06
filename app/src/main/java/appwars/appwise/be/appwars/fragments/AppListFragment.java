@@ -1,7 +1,5 @@
 package appwars.appwise.be.appwars.fragments;
 
-import android.content.Intent;
-
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -10,24 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.Collator;
 import java.util.ArrayList;
 
-import appwars.appwise.*;
-
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import appwars.appwise.be.appwars.App;
 import appwars.appwise.be.appwars.AppListAdapter;
-import appwars.appwise.be.appwars.PackageInformation;
+import appwars.appwise.be.appwars.utils.PackageInformation;
 import appwars.appwise.be.appwars.R;
 
 /**
@@ -68,6 +60,7 @@ public class AppListFragment extends Fragment {
         return view;
     }
 
+
     public List<App> getAllUserInstalledApps() {
         PackageInformation pi = new PackageInformation(getContext());
         pi.getInstalledApps(true);
@@ -90,10 +83,14 @@ public class AppListFragment extends Fragment {
 
                 String appName = (String) pm.getApplicationLabel(appInfo);
                 Drawable appIcon = appInfo.loadIcon(pm);
-                App app = new App(appName, appIcon);
-                retrievedApps.add(app);
+                if (!appName.equals("") && (!TextUtils.isEmpty(appName))) {
+                    App app = new App(appName, appIcon, false);
+                    retrievedApps.add(app);
+                }
             }
         }
         return retrievedApps;
     }
+
+
 }

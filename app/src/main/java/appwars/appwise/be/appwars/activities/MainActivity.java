@@ -4,12 +4,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerTabStrip;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.Profile;
@@ -27,6 +31,8 @@ public class MainActivity extends FragmentActivity {
     private String first_name;
     private String last_name;
     private FragmentPagerAdapter adapterViewPager;
+    private PagerTabStrip pagerHeader;
+
 
 
     @Override
@@ -34,10 +40,11 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView welcome_textview = (TextView) findViewById(R.id.welcome_textview);
+        pagerHeader = (PagerTabStrip) findViewById(R.id.pager_header);
 
         getFirstAndLastName();
-        welcome_textview.setText("Welcome " + first_name + ", \n please follow the walkthrough.");
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        welcome_textview.setText("Welcome " + first_name + ", \nplease follow the walkthrough.");
+        final ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
     }
@@ -59,12 +66,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -72,9 +74,9 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 2;
+        private static int NUM_ITEMS = 3;
+
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -89,12 +91,13 @@ public class MainActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return AppListFragment.newInstance(0, "Page # 1");
+
+                    return new AppListFragment();
                 case 1:
-                    return TestFragment.newInstance(1, "page # 2");
-//
-//                case 2: // Fragment # 1 - This will show SecondFragment
-//                    return SecondFragment.newInstance(2, "Page # 3");
+                    return new TestFragment();
+
+                case 2: // Fragment # 1 - This will show SecondFragment
+                    return new TestFragment();
                 default:
                     return null;
             }

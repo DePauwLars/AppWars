@@ -15,6 +15,7 @@ import appwars.appwise.be.appwars.R;
 public class TestFragment extends Fragment {
     private String title;
     private int page;
+    private TextView selected_apps;
 
     public static AppListFragment newInstance(int page, String title) {
         AppListFragment fragmentFirst = new AppListFragment();
@@ -26,11 +27,13 @@ public class TestFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.test_fragment_layout, container, false);
         TextView tvLabel = (TextView) view.findViewById(R.id.tv_label2);
         tvLabel.setText(title);
+        selected_apps = (TextView) view.findViewById(R.id.selected_apps);
+
+
         return view;
     }
 }

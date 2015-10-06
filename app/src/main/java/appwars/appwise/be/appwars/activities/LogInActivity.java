@@ -1,4 +1,4 @@
-package appwars.appwise.be.appwars;
+package appwars.appwise.be.appwars.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,6 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import appwars.appwise.be.appwars.R;
 import appwars.appwise.be.appwars.activities.MainActivity;
 
 public class LogInActivity extends AppCompatActivity {

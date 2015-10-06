@@ -8,10 +8,20 @@ import android.graphics.drawable.Drawable;
 public class App {
     private String name;
     private Drawable icon;
+    private boolean isChecked;
 
-    public App(String name, Drawable icon) {
+    public App(String name, Drawable icon, boolean isChecked) {
         this.name = name;
         this.icon = icon;
+        this.isChecked = isChecked;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
     }
 
     public String getName() {
