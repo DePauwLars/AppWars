@@ -62,7 +62,6 @@ public class MainActivity extends FragmentActivity {
                 } else {
                     Toast.makeText(getBaseContext(), "Select 3 apps to continue.", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
@@ -72,8 +71,7 @@ public class MainActivity extends FragmentActivity {
         super.onPostCreate(savedInstanceState);
     }
 
-    public void selectFragment(View view) {
-
+        public void selectFragment(View view) {
         Fragment fragment;
         if (view == button_start) {
             fragment = new AppListFragment();

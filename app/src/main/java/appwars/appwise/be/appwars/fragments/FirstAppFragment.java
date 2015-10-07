@@ -27,8 +27,6 @@ public class FirstAppFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.first_app_fragment_layout, container, false);
         TextView app_name = (TextView) view.findViewById(R.id.app_name);
-
-
         return view;
     }
 

@@ -26,6 +26,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import appwars.appwise.be.appwars.App;
+import appwars.appwise.be.appwars.AppNames;
 import appwars.appwise.be.appwars.Counter;
 import appwars.appwise.be.appwars.R;
 import appwars.appwise.be.appwars.activities.MainActivity;
@@ -42,6 +44,9 @@ public class LogInActivity extends AppCompatActivity {
         permissions = new ArrayList<>();
         addPermissionsToList();
         Counter.count = 0;
+        AppNames.firstAppName = "";
+        AppNames.secondAppName = "";
+        AppNames.thirdAppName = "";
 
     }
 

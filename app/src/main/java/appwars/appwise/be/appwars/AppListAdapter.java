@@ -29,7 +29,7 @@ import appwars.appwise.be.appwars.fragments.FirstAppFragment;
 import appwars.appwise.be.appwars.fragments.TestFragment;
 
 
-public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder>  {
+public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     private static ArrayList<App> mDataset;
     private ArrayList<String> chosenApps;
     public static int counter;
@@ -59,49 +59,52 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         holder.appCheckBox.setTag(String.valueOf(position));
 
         holder.appCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                                          @Override
-                                                          public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                                              {
-                                                                  App app = mDataset.get(position);
-                                                                  final Intent intent = new Intent(buttonView.getContext(), FirstAppFragment.class);
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                                                                  if (isChecked) {
-                                                                      counter++;
-                                                                      Counter.count ++;
-                                                                      switch (counter) {
-                                                                          case 1:
-                                                                              intent.putExtra("first_app", app.getName());
-                                                                              break;
-                                                                          case 2:
-                                                                              intent.putExtra("second_app", app.getName());
-                                                                              break;
-                                                                          case 3:
-                                                                              intent.putExtra("third_app", app.getName());
-                                                                              break;
-                                                                      }
+                App app = mDataset.get(position);
 
-                                                                      chosenApps.add(app.getName());
-                                                                  } else if (!isChecked) {
-                                                                      counter--;
-                                                                      Counter.count --;
+                if (isChecked) {
+                    counter++;
+                    Counter.count++;
+                    chosenApps.add(app.getName());
+                    switch (counter) {
+                        case 1:
+                            AppNames.firstAppName = app.getName();
+                            break;
+                        case 2:
+                            AppNames.secondAppName = app.getName();
+                            break;
+                        case 3:
+                            AppNames.thirdAppName = app.getName();
+                            break;
+                    }
 
-                                                                      chosenApps.remove(app.getName());
-                                                                  }
-                                                                  if (counter >= 4) {
-                                                                      Toast.makeText(buttonView.getContext(), "You can only select 3 applications.", Toast.LENGTH_LONG).show();
-                                                                      buttonView.setChecked(false);
-                                                                      counter--;
-                                                                      Counter.count --;
+                } else if (!isChecked) {
+                    counter--;
+                    Counter.count--;
 
-                                                                  } else {
-                                                                      app.setIsChecked(isChecked);
-                                                                  }
-                                                                  for (String name : chosenApps) {
-                                                                      Log.i("appname: ", name);
-                                                                  }
-                                                              }
-                                                          }
-                                                      });
+                    chosenApps.remove(app.getName());
+                }
+                if (counter >= 4) {
+                    Toast.makeText(buttonView.getContext(), "You can only select 3 applications.", Toast.LENGTH_LONG).show();
+                    buttonView.setChecked(false);
+                    counter--;
+                    Counter.count--;
+
+                } else {
+                    app.setIsChecked(isChecked);
+
+
+
+                }
+                for (String name : chosenApps) {
+                    Log.i("appname: ", name);
+                }
+
+            }
+
+        });
 
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("chosen_apps", chosenApps);
