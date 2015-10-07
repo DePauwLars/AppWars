@@ -26,22 +26,22 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import appwars.appwise.be.appwars.Counter;
 import appwars.appwise.be.appwars.R;
 import appwars.appwise.be.appwars.activities.MainActivity;
 
 public class LogInActivity extends AppCompatActivity {
     private List<String> permissions;
 
-    private TextView facebookLogInTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        facebookLogInTextView = (TextView) findViewById(R.id.facebookLogInTextView);
         permissions = new ArrayList<>();
         addPermissionsToList();
+        Counter.count = 0;
 
     }
 
@@ -54,8 +54,7 @@ public class LogInActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -68,6 +67,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     public void signInWithFacebook(View view) {
+
 
         ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
             @Override

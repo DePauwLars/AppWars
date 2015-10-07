@@ -10,16 +10,15 @@
 
 
     <TextView
-        android:id="@+id/tv_label"
+        android:id="@+id/select_apps_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingBottom="20dp"
-        android:textSize="15sp" />
+   <Button
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:text="Continue"
+       android:id="@+id/button_continue_to_fragment_first_app"/>
 
 
 

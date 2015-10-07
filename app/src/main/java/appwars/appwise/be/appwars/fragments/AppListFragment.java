@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ public class AppListFragment extends Fragment {
     private RecyclerView appListRecyclerView;
     private RecyclerView.Adapter appListAdapter;
     private RecyclerView.LayoutManager appListLayoutLManager;
-    private List<App> apps;
+    private ArrayList<App> apps;
+    private Button button_continue_to_fragment_first_app;
 
     public static AppListFragment newInstance(int page, String title) {
         AppListFragment fragmentFirst = new AppListFragment();
@@ -45,9 +47,11 @@ public class AppListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_list_fragment_layout, container, false);
-        TextView tvLabel = (TextView) view.findViewById(R.id.tv_label);
-        tvLabel.setText("Select 3 of your apps");
+        TextView select_apps_label = (TextView) view.findViewById(R.id.select_apps_label);
+        select_apps_label.setText("Select 3 of your apps");
         appListRecyclerView = (RecyclerView) view.findViewById(R.id.app_list_recycler_view);
+        button_continue_to_fragment_first_app = (Button) view.findViewById(R.id.button_continue_to_fragment_first_app);
+        button_continue_to_fragment_first_app.setVisibility(View.GONE);
 
         apps = new ArrayList<>();
         apps = getAllUserInstalledApps();
@@ -57,14 +61,14 @@ public class AppListFragment extends Fragment {
         appListRecyclerView.setLayoutManager(appListLayoutLManager);
         appListRecyclerView.setAdapter(appListAdapter);
 
+
         return view;
     }
 
-
-    public List<App> getAllUserInstalledApps() {
+    public ArrayList<App> getAllUserInstalledApps() {
         PackageInformation pi = new PackageInformation(getContext());
         pi.getInstalledApps(true);
-        List<App> retrievedApps = new ArrayList<>();
+        ArrayList<App> retrievedApps = new ArrayList<>();
 
         PackageInformation androidPackagesInfo = new PackageInformation(getContext());
         ArrayList<PackageInformation.InfoObject> appsData = androidPackagesInfo.getInstalledApps(true);
@@ -80,7 +84,6 @@ public class AppListFragment extends Fragment {
         for (ApplicationInfo appInfo : applications) {
             if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
             } else {
-
                 String appName = (String) pm.getApplicationLabel(appInfo);
                 Drawable appIcon = appInfo.loadIcon(pm);
                 if (!appName.equals("") && (!TextUtils.isEmpty(appName))) {
@@ -91,6 +94,4 @@ public class AppListFragment extends Fragment {
         }
         return retrievedApps;
     }
-
-
 }

@@ -1,6 +1,9 @@
 package appwars.appwise.be.appwars;
 
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Lakkedelakke on 6/10/2015.
@@ -39,4 +42,5 @@ public class App {
     public void setIcon(Drawable icon) {
         this.icon = icon;
     }
+
 }
