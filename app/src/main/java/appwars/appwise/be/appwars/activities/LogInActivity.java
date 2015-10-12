@@ -1,91 +1,79 @@
 package appwars.appwise.be.appwars.activities;
 
-import android.app.Activity;
+
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import appwars.appwise.be.appwars.App;
-import appwars.appwise.be.appwars.AppNames;
-import appwars.appwise.be.appwars.Counter;
 import appwars.appwise.be.appwars.R;
-import appwars.appwise.be.appwars.activities.MainActivity;
 
 public class LogInActivity extends AppCompatActivity {
     private List<String> permissions;
-
+    private TextView facebookLogInTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_log_in);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        facebookLogInTextView = (TextView) findViewById(R.id.facebookLogInTextView);
         permissions = new ArrayList<>();
         addPermissionsToList();
-        Counter.count = 0;
-        AppNames.firstAppName = "";
-        AppNames.secondAppName = "";
-        AppNames.thirdAppName = "";
+        signInWithFacebook();
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_log_in, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void signInWithFacebook(View view) {
-
-
+    public void signInWithFacebook() {
+        LoginManager loginManager = LoginManager.getInstance();
         ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException err) {
                 if (user == null) {
-                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                    Log.d("Appwars", "Uh oh. The user cancelled the Facebook login.");
                 } else if (user.isNew()) {
-                    Log.d("MyApp", "User signed up and logged in through Facebook!");
+                    Log.d("Appwars", "User signed up and logged in through Facebook!");
                 } else {
-                    Log.d("MyApp", "User logged in through Facebook!");
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
+                    query.include("User");
+                    query.whereEqualTo("User", ParseUser.getCurrentUser());
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> list, ParseException e) {
+                            if (e == null) {
+                                if (list.size() < 3) {
+                                    Log.d("Appwars", "User logged in through Facebook!");
+                                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getBaseContext(), "You've already voted.", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
                 }
+
+
             }
         });
     }
