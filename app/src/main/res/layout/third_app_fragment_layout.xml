@@ -2,90 +2,117 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="#000000"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_weight="30">
+    <!--android:background="#000000"-->
 
-        <TextView
-            android:id="@+id/app_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
-            android:background="#F9FF00"
-            android:gravity="center"
-            android:text="appname"
-            android:textColor="@color/com_facebook_blue"
-            android:textSize="40sp" />
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#ffc107"
+        android:gravity="bottom"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:text="appname"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="30">
 
-            <TextView
-                android:id="@+id/app_3_q_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:text="1. this is question one about the second app." />
-
-            <EditText
-                android:id="@+id/app_3_a_1"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="100"
             android:orientation="vertical"
-            android:layout_weight="30">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:weightSum="0.5">
 
 
-            <TextView
-                android:id="@+id/app_3_q_2"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/app_3_a_1_wrapper"
+                android:paddingTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2. this is question one about the second app."
-                android:layout_weight="30"/>
+                android:textColorHint="#ffc107">
 
-            <EditText
-                android:id="@+id/app_3_a_2"
+                <EditText
+                    android:id="@+id/app_3_a_1"
+                    android:layout_width="match_parent"
+                    android:backgroundTint="#ffc107"
+                    android:textSize="12sp"
+
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffc107"
+                    android:textColorHighlight="#FF1D4D"
+                    android:textColorHint="#ffc107" />
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/app_3_a_2_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:textColorHint="#ffc107">
+
+                <EditText
+                    android:id="@+id/app_3_a_2"
+                    android:layout_width="match_parent"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#ffc107"
+                    android:textColor="#ffc107"
+                    android:textColorHighlight="#F44336" />
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/app_3_a_3_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="#ffc107">
+
+                <EditText
+                    android:id="@+id/app_3_a_3"
+                    android:layout_width="match_parent"
+                    android:textSize="12sp"
+                    android:backgroundTint="#ffc107"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffc107"
+                    android:textColorHighlight="#FF1D4D"
+                    android:textColorHint="#ffc107" />
+            </android.support.design.widget.TextInputLayout>
+
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="30">
-
-            <TextView
-                android:id="@+id/app_3_q_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="3. this is question one about the second app."
-                android:layout_weight="30"/>
-
-            <EditText
-                android:id="@+id/app_3_a_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"/>
     <Button
-        android:layout_width="fill_parent"
+        android:id="@+id/go_to_next_fragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Continue"
-        android:id="@+id/go_to_next_fragment"/>
+        android:background="#ffc107"
+        android:text="continue"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
 </LinearLayout>

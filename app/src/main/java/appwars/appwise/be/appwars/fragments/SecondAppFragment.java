@@ -1,6 +1,7 @@
 package appwars.appwise.be.appwars.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,6 +36,12 @@ public class SecondAppFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.second_app_fragment_layout, container, false);
+        final TextInputLayout app_2_a_1_wrapper = (TextInputLayout) view.findViewById(R.id.app_2_a_1_wrapper);
+        final TextInputLayout app_2_a_2_wrapper = (TextInputLayout) view.findViewById(R.id.app_2_a_2_wrapper);
+        final TextInputLayout app_2_a_3_wrapper = (TextInputLayout) view.findViewById(R.id.app_2_a_3_wrapper);
+        app_2_a_1_wrapper.setHint("2.1 Why did you choose this app?");
+        app_2_a_2_wrapper.setHint("2.2 What is the best feature about it?");
+        app_2_a_3_wrapper.setHint("2.3 What would you like to see improved?");
         go_to_next_fragment = (Button) view.findViewById(R.id.go_to_next_fragment);
         TextView app_name_textview = (TextView) view.findViewById(R.id.app_name);
         appName = ((MainActivity) getActivity()).getAppNameFromList(1);
