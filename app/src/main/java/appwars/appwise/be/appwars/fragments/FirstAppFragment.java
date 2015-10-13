@@ -2,7 +2,9 @@ package appwars.appwise.be.appwars.fragments;
 
 import android.content.Context;
 import android.content.pm.PackageInstaller;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -46,6 +48,12 @@ public class FirstAppFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.first_app_fragment_layout, container, false);
+        final TextInputLayout app_1_a_1_wrapper = (TextInputLayout) view.findViewById(R.id.app_1_a_1_wrapper);
+        final TextInputLayout app_1_a_2_wrapper = (TextInputLayout) view.findViewById(R.id.app_1_a_2_wrapper);
+        final TextInputLayout app_1_a_3_wrapper = (TextInputLayout) view.findViewById(R.id.app_1_a_3_wrapper);
+        app_1_a_1_wrapper.setHint("1.1 Why did you choose this app?");
+        app_1_a_2_wrapper.setHint("1.2 What is the best feature about it?");
+        app_1_a_3_wrapper.setHint("1.3 What would you like to see improved?");
         app_1_a_1 = (EditText) view.findViewById(R.id.app_1_a_1);
         app_1_a_2 = (EditText) view.findViewById(R.id.app_1_a_2);
         app_1_a_3 = (EditText) view.findViewById(R.id.app_1_a_3);
@@ -93,6 +101,7 @@ public class FirstAppFragment extends Fragment {
 
                         }
                     });
+                    ((MainActivity)getActivity()).putTextFieldInvisible();
                     ((MainActivity) getActivity()).selectSecondAppFragment(v);
                 } else {
                     Toast.makeText(getContext(), "Please fill in  your answers before continuing.", Toast.LENGTH_SHORT).show();
