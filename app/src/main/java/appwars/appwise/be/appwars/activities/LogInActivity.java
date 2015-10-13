@@ -38,8 +38,8 @@ public class LogInActivity extends AppCompatActivity {
         permissions = new ArrayList<>();
         addPermissionsToList();
         signInWithFacebook();
-
     }
+
 
     public void signInWithFacebook() {
         LoginManager loginManager = LoginManager.getInstance();
@@ -72,8 +72,6 @@ public class LogInActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-
             }
         });
     }

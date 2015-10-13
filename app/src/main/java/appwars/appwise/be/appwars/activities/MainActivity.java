@@ -1,98 +1,64 @@
 package appwars.appwise.be.appwars.activities;
 
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.PagerTitleStrip;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.Profile;
-
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.parse.FindCallback;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import appwars.appwise.be.appwars.AppListAdapter;
-import appwars.appwise.be.appwars.Counter;
 import appwars.appwise.be.appwars.R;
 import appwars.appwise.be.appwars.fragments.AppListFragment;
 import appwars.appwise.be.appwars.fragments.FirstAppFragment;
-import appwars.appwise.be.appwars.fragments.TestFragment;
+import appwars.appwise.be.appwars.fragments.LogInWithFacebookFragment;
+import appwars.appwise.be.appwars.fragments.SecondAppFragment;
+import appwars.appwise.be.appwars.fragments.ThirdAppFragment;
 
 public class MainActivity extends FragmentActivity {
     private String first_name;
     private String last_name;
     private FragmentPagerAdapter adapterViewPager;
-    private FrameLayout frameLayout;
-    private Button button_start;
-    private Button go_to_next_frag;
+    private List<String> appsFromList;
+    private ParseUser currentUser;
+    private String userObjectId;
+    private List<String> permissions;
+    private TextView facebookLogInTextView;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView welcome_textview = (TextView) findViewById(R.id.welcome_textview);
-        frameLayout = (FrameLayout) findViewById(R.id.fragment_place);
-        getFirstAndLastName();
-        go_to_next_frag = (Button) findViewById(R.id.go_to_next_frag);
-        go_to_next_frag.setVisibility(View.GONE);
-        button_start = (Button) findViewById(R.id.button_start);
-        welcome_textview.setText("Welcome " + first_name + ", \nplease follow the walkthrough.");
-
-        go_to_next_frag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Counter.count == 3) {
-                    selectFragment(v);
-
-                } else {
-                    Toast.makeText(getBaseContext(), "Select 3 apps to continue.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-    }
-
-        public void selectFragment(View view) {
-        Fragment fragment;
-        if (view == button_start) {
-            fragment = new AppListFragment();
+        view = getWindow().getDecorView().getRootView();
+        FrameLayout frame_layout = (FrameLayout) findViewById(R.id.frame_layout);
+        permissions = new ArrayList<>();
+        appsFromList = new ArrayList<>();
+        addPermissionsToList();
+        ParseUser user = ParseUser.getCurrentUser();
+        if (user == null) {
+            selectFacebookLoginFragment(view);
         } else {
-            fragment = new TestFragment();
+            selectAppListFragment(view);
         }
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fragment);
-        fragmentTransaction.commit();
-        button_start.setVisibility(View.GONE);
-        go_to_next_frag.setVisibility(View.VISIBLE);
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     public void getFirstAndLastName() {
@@ -101,5 +67,113 @@ public class MainActivity extends FragmentActivity {
         last_name = profile.getLastName();
     }
 
+    public void selectAppListFragment(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, AppListFragment.newInstance());
+        fragmentTransaction.commit();
+    }
 
+    public void selectFacebookLoginFragment(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, LogInWithFacebookFragment.newInstance());
+        fragmentTransaction.commit();
+    }
+
+    public void selectFirstAppFragment(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, FirstAppFragment.newInstance());
+        fragmentTransaction.commit();
+    }
+
+    public void selectSecondAppFragment(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, SecondAppFragment.newInstance());
+        fragmentTransaction.commit();
+    }
+
+    public void selectThirdAppFragment(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, ThirdAppFragment.newInstance());
+        fragmentTransaction.commit();
+    }
+
+    public void addAppNameToList(String name) {
+        appsFromList.add(name);
+    }
+
+    public void removeAppNameFromList(String name) {
+        appsFromList.remove(name);
+    }
+
+    public String getAppNameFromList(int position) {
+        return appsFromList.get(position);
+    }
+
+    public String getUserObjectId(View view) {
+        return userObjectId;
+    }
+
+
+    public void signInWithFacebook(final View view) {
+        LoginManager loginManager = LoginManager.getInstance();
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException err) {
+                if (user == null) {
+                    Log.d("Appwars", "Uh oh. The user cancelled the Facebook login.");
+                } else if (user.isNew()) {
+                    Log.d("Appwars", "User signed up and logged in through Facebook!");
+                } else {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
+                    query.include("User");
+                    query.whereEqualTo("User", ParseUser.getCurrentUser());
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> list, ParseException e) {
+                            if (e == null) {
+                                if (list.size() < 3) {
+                                    Log.d("Appwars", "User logged in through Facebook!");
+                                    selectAppListFragment(view);
+                                } else {
+                                    Toast.makeText(getBaseContext(), "You've already voted.", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AppEventsLogger.activateApp(getBaseContext());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppEventsLogger.deactivateApp(getBaseContext());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void addPermissionsToList() {
+        permissions.add("public_profile");
+        permissions.add("email");
+        permissions.add("user_status");
+        permissions.add("user_friends");
+    }
 }

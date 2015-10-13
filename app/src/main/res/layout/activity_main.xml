@@ -1,35 +1,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
+    android:background="#F7F7F7"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp"
     tools:context="appwars.appwise.be.appwars.activities.MainActivity">
 
     <TextView
         android:id="@+id/welcome_textview"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_start"
-        android:text="Begin"
-        android:onClick="selectFragment"/>
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="continue"
-        android:id="@+id/go_to_next_frag"/>
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:background="#46bbca"
+        android:text="Select 3 applications"
+        android:textColor="#b3f6ff"
+        android:textSize="20sp"/>
+
 
     <FrameLayout
-        android:id="@+id/fragment_place"
-        android:name="appwars.appwise.be.appwars.fragments.AppListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:id="@+id/frame_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"></FrameLayout>
 
 </LinearLayout>
