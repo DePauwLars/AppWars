@@ -63,17 +63,14 @@
                 android:id="@+id/app_1_a_2_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:textColorHint="#F44336">
 
                 <EditText
                     android:id="@+id/app_1_a_2"
                     android:layout_width="match_parent"
-                    android:textSize="10sp"
-
+                    android:textSize="12sp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#F44300"
-
                     android:textColor="#F44336"
                     android:textColorHighlight="#F44336" />
             </android.support.design.widget.TextInputLayout>
@@ -93,7 +90,7 @@
                 <EditText
                     android:id="@+id/app_1_a_3"
                     android:layout_width="match_parent"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:backgroundTint="#F44300"
                     android:layout_height="wrap_content"
                     android:textColor="#F44336"
