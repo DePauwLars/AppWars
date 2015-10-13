@@ -93,7 +93,6 @@ public class FirstAppFragment extends Fragment {
 
                         }
                     });
-
                     ((MainActivity) getActivity()).selectSecondAppFragment(v);
                 } else {
                     Toast.makeText(getContext(), "Please fill in  your answers before continuing.", Toast.LENGTH_SHORT).show();

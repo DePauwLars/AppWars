@@ -2,23 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="#F7F7F7"
     android:orientation="vertical"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="5dp"
+
     tools:context="appwars.appwise.be.appwars.activities.MainActivity">
 
     <TextView
         android:id="@+id/welcome_textview"
         android:paddingLeft="10dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:textAlignment="center"
         android:gravity="center_vertical"
-        android:background="#46bbca"
+        android:background="#FF1D4D"
         android:text="Select 3 applications"
-        android:textColor="#b3f6ff"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"/>
 
 

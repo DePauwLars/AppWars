@@ -43,12 +43,14 @@ public class MainActivity extends FragmentActivity {
     private List<String> permissions;
     private TextView facebookLogInTextView;
     private View view;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         view = getWindow().getDecorView().getRootView();
+        textView = (TextView) view.findViewById(R.id.welcome_textview);
         FrameLayout frame_layout = (FrameLayout) findViewById(R.id.frame_layout);
         permissions = new ArrayList<>();
         appsFromList = new ArrayList<>();
@@ -175,5 +177,9 @@ public class MainActivity extends FragmentActivity {
         permissions.add("email");
         permissions.add("user_status");
         permissions.add("user_friends");
+    }
+
+    public void putTextFieldInvisible() {
+        textView.setVisibility(View.GONE);
     }
 }

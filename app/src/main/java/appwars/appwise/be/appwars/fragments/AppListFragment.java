@@ -64,6 +64,7 @@ public class AppListFragment extends Fragment {
         go_to_next_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    ((MainActivity)getActivity()).putTextFieldInvisible();
                 ((MainActivity) getActivity()).selectFirstAppFragment(v);
             }
         });
