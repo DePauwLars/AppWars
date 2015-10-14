@@ -3,6 +3,7 @@ package appwars.appwise.be.appwars.fragments;
 import android.content.Context;
 import android.content.pm.PackageInstaller;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class FirstAppFragment extends Fragment {
     private EditText app_1_a_3;
     private String appName;
     private Context context;
+    private ImageView app_icon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +68,8 @@ public class FirstAppFragment extends Fragment {
         TextView app_name_textview = (TextView) view.findViewById(R.id.app_name);
         appName = ((MainActivity) getActivity()).getAppNameFromList(0);
         app_name_textview.setText(appName);
+        app_icon = (ImageView) view.findViewById(R.id.app_icon);
+        app_icon.setImageDrawable(((MainActivity)getActivity()).getAppIconFromList(0));
         this.context = context;
 
         go_to_next_fragment.setOnClickListener(new View.OnClickListener() {

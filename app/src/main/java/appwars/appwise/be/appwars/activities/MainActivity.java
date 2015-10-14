@@ -1,6 +1,7 @@
 package appwars.appwise.be.appwars.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -38,6 +39,7 @@ public class MainActivity extends FragmentActivity {
     private String last_name;
     private FragmentPagerAdapter adapterViewPager;
     private List<String> appsFromList;
+    private List<Drawable> appIcons;
     private ParseUser currentUser;
     private String userObjectId;
     private List<String> permissions;
@@ -54,11 +56,14 @@ public class MainActivity extends FragmentActivity {
         FrameLayout frame_layout = (FrameLayout) findViewById(R.id.frame_layout);
         permissions = new ArrayList<>();
         appsFromList = new ArrayList<>();
+        appIcons = new ArrayList<>();
         addPermissionsToList();
         ParseUser user = ParseUser.getCurrentUser();
         if (user == null) {
+            putTextFieldInvisible();
             selectFacebookLoginFragment(view);
         } else {
+            putTextFieldVisible();
             selectAppListFragment(view);
         }
     }
@@ -102,6 +107,18 @@ public class MainActivity extends FragmentActivity {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, ThirdAppFragment.newInstance());
         fragmentTransaction.commit();
+    }
+
+    public void addAppIconToList(Drawable icon) {
+        appIcons.add(icon);
+    }
+
+    public void removeIconFromList(Drawable icon) {
+        appIcons.remove(icon);
+    }
+
+    public Drawable getAppIconFromList (int position) {
+        return appIcons.get(position);
     }
 
     public void addAppNameToList(String name) {
@@ -181,5 +198,9 @@ public class MainActivity extends FragmentActivity {
 
     public void putTextFieldInvisible() {
         textView.setVisibility(View.GONE);
+    }
+
+    public void putTextFieldVisible() {
+        textView.setVisibility(View.VISIBLE);
     }
 }

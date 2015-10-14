@@ -152,12 +152,15 @@ public class AppListFragment extends Fragment {
 
                     if (!chosenApps.contains(app.getName())) {
                         ((MainActivity) getActivity()).addAppNameToList(app.getName());
+                        ((MainActivity) getActivity()).addAppIconToList(app.getIcon());
                         chosenApps.add(app.getName());
 
 
                     } else {
                         ((MainActivity) getActivity()).removeAppNameFromList(app.getName());
+                        ((MainActivity) getActivity()).removeIconFromList(app.getIcon());
                         chosenApps.remove(app.getName());
+
                     }
                     if (chosenApps.size() < 3) {
                         go_to_next_fragment.setVisibility(View.GONE);

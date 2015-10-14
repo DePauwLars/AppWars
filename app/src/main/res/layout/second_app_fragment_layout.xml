@@ -4,22 +4,36 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:background="#000000"
-
     android:orientation="vertical">
 
-    <!--android:background="#000000"-->
-
-    <TextView
-        android:id="@+id/app_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="#cddc39"
-        android:gravity="bottom"
-        android:paddingBottom="15dp"
-        android:paddingLeft="15dp"
-        android:text="appname"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp" />
+        android:layout_height="70dp"
+        android:background="#FF1D4D"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/app_icon"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:layout_weight="0.3" />
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_weight="0.7"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="appname"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
 
     <ScrollView
@@ -39,21 +53,21 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/app_2_a_1_wrapper"
-                android:paddingTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="#cddc39">
+                android:paddingTop="10dp"
+                android:textColorHint="#FFFFFF">
 
                 <EditText
                     android:id="@+id/app_2_a_1"
                     android:layout_width="match_parent"
-                    android:backgroundTint="#cddc39"
-                    android:textSize="12sp"
-
                     android:layout_height="wrap_content"
-                    android:textColor="#acba24"
-                    android:textColorHighlight="#FF1D4D"
-                    android:textColorHint="#cddc39" />
+                    android:backgroundTint="#FFFFFF"
+
+                    android:textColor="#FFFFFF"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="12sp" />
             </android.support.design.widget.TextInputLayout>
 
             <View
@@ -65,16 +79,16 @@
                 android:id="@+id/app_2_a_2_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="#acba24">
+                android:textColorHint="#FFFFFF">
 
                 <EditText
                     android:id="@+id/app_2_a_2"
                     android:layout_width="match_parent"
-                    android:textSize="12sp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#cddc39"
-                    android:textColor="#acba24"
-                    android:textColorHighlight="#FF1D4D" />
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="12sp" />
             </android.support.design.widget.TextInputLayout>
 
             <View
@@ -87,30 +101,32 @@
                 android:id="@+id/app_2_a_3_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="#cddc39">
+                android:textColorHint="#FFFFFF">
 
                 <EditText
                     android:id="@+id/app_2_a_3"
                     android:layout_width="match_parent"
-                    android:textSize="12sp"
-                    android:backgroundTint="#cddc39"
                     android:layout_height="wrap_content"
-                    android:textColor="#acba24"
-                    android:textColorHighlight="#FF1D4D"
-                    android:textColorHint="#cddc39" />
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="12sp" />
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
     </ScrollView>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.4"/>
+        android:layout_weight="0.4" />
+
     <Button
         android:id="@+id/go_to_next_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#cddc39"
+        android:background="#FF1D4D"
         android:text="continue"
         android:textAlignment="center"
         android:textColor="#FFFFFF"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class ThirdAppFragment extends Fragment {
     private EditText app_3_a_2;
     private EditText app_3_a_3;
     private String appName;
+    private ImageView app_icon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class ThirdAppFragment extends Fragment {
         TextView app_name_textview = (TextView) view.findViewById(R.id.app_name);
         appName = ((MainActivity) getActivity()).getAppNameFromList(2);
         app_name_textview.setText(appName);
+        app_icon = (ImageView) view.findViewById(R.id.app_icon);
+        app_icon.setImageDrawable(((MainActivity) getActivity()).getAppIconFromList(2));
         go_to_next_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
