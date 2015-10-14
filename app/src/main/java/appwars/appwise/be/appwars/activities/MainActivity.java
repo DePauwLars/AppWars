@@ -203,4 +203,6 @@ public class MainActivity extends FragmentActivity {
     public void putTextFieldVisible() {
         textView.setVisibility(View.VISIBLE);
     }
+
+
 }
