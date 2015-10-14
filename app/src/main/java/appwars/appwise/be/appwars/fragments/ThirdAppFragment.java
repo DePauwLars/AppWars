@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,17 +39,12 @@ import appwars.appwise.be.appwars.activities.MainActivity;
 
 public class ThirdAppFragment extends Fragment {
     private Button go_to_next_fragment;
-    private TextView app_name_textview;
-    private EditText app_1_a_1;
-    private EditText app_1_a_2;
-    private EditText app_1_a_3;
     private String appName;
     private Context context;
     private ImageView app_icon;
     private DiscreteSeekBar bar_1;
     private DiscreteSeekBar bar_2;
     private DiscreteSeekBar bar_3;
-    private TextView instruction_text;
     private TextView q1;
     private TextView q2;
     private TextView q3;
@@ -72,7 +69,6 @@ public class ThirdAppFragment extends Fragment {
         bar_1 = (DiscreteSeekBar) view.findViewById(R.id.bar_1);
         bar_2 = (DiscreteSeekBar) view.findViewById(R.id.bar_2);
         bar_3 = (DiscreteSeekBar) view.findViewById(R.id.bar_3);
-//        instruction_text = (TextView) view.findViewById(R.id.instruction_text);
         q1 = (TextView) view.findViewById(R.id.q1);
         q2 = (TextView) view.findViewById(R.id.q2);
         q3 = (TextView) view.findViewById(R.id.q3);
@@ -86,37 +82,12 @@ public class ThirdAppFragment extends Fragment {
             public void onClick(View v) {
                 if (!(q1_value == 0) && !(q2_value == 0) && !(q3_value == 0)) {
 
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
-                    query.include("User");
-                    query.whereEqualTo("User", ParseUser.getCurrentUser());
-                    query.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(final List<ParseObject> list, ParseException e) {
-                            if (e == null) {
-                                if (list.size() < 3) {
-                                    ParseObject voteForUser = ParseObject.create("Vote");
-                                    voteForUser.put("User", ParseUser.getCurrentUser());
-                                    voteForUser.put("appname", appName);
-                                    voteForUser.put("design", q1_value);
-                                    voteForUser.put("performance", q2_value);
-                                    voteForUser.put("intuitivity", q3_value);
-                                    voteForUser.saveInBackground(new SaveCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-                                            Log.i(appName, "data has been saved for " + appName);
-                                            int objectsInParse = list.size() + 1;
-                                            Log.i("amount of apps saved to parse", objectsInParse + "");
-                                        }
-                                    });
-                                }
-                            } else {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+                    ((MainActivity) getActivity()).setDataForThirdApp(appName, q1_value, q2_value, q3_value);
                     ((MainActivity) getActivity()).putTextFieldInvisible();
+                    ((MainActivity) getActivity()).commitAnswersToParse();
                     Intent intent = new Intent(getContext(), EndActivity.class);
                     startActivity(intent);
+                    getActivity().finish();
                 } else {
                     Toast.makeText(getContext(), "Please fill in  your answers before continuing.", Toast.LENGTH_SHORT).show();
                 }
@@ -146,6 +117,12 @@ public class ThirdAppFragment extends Fragment {
         bar_3.setTrackColor(Color.parseColor("#FF1D4D"));
         bar_3.setScrubberColor(Color.parseColor("#FF1D4D"));
         bar_3.setThumbColor(Color.parseColor("#FFFFFF"), Color.parseColor("#FF1D4D"));
+    }
+    public void removeThirdAppFragmentFromBackStack(View view) {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.remove(this);
+        fragmentTransaction.commit();
     }
 
     public void getValuesFromBars() {

@@ -53,6 +53,8 @@ public class AppListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MainActivity) getActivity()).initializeAppsFromListToZero();
+        ((MainActivity) getActivity()).initializeAppIconsFromListToZero();
     }
 
     @Override
@@ -60,6 +62,7 @@ public class AppListFragment extends Fragment {
         final View view = inflater.inflate(R.layout.app_list_fragment_layout, container, false);
         appListRecyclerView = (RecyclerView) view.findViewById(R.id.app_list_recycler_view);
         go_to_next_fragment = (Button) view.findViewById(R.id.go_to_next_fragment);
+        ((MainActivity) getActivity()).initializeAppIconsFromListToZero();
         go_to_next_fragment.setVisibility(View.GONE);
         go_to_next_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,16 +73,21 @@ public class AppListFragment extends Fragment {
         });
 
         apps = new ArrayList<>();
+
         apps = getAllUserInstalledApps();
 
         appListLayoutLManager = new LinearLayoutManager(getContext());
         appListAdapter = new AppListAdapter(apps, getContext());
         appListRecyclerView.setLayoutManager(appListLayoutLManager);
         appListRecyclerView.setAdapter(appListAdapter);
-
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        apps = new ArrayList<>();
+    }
 
     public List<App> getAllUserInstalledApps() {
         PackageInformation pi = new PackageInformation(getContext());
@@ -127,6 +135,7 @@ public class AppListFragment extends Fragment {
             this.mDataset = dataset;
             this.context = context;
             chosenApps = new ArrayList<>();
+            ((MainActivity) getActivity()).initializeAppsFromListToZero();
         }
 
         @Override

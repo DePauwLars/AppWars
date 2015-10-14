@@ -40,16 +40,12 @@ import appwars.appwise.be.appwars.activities.MainActivity;
 public class FirstAppFragment extends Fragment {
     private Button go_to_next_fragment;
     private TextView app_name_textview;
-    private EditText app_1_a_1;
-    private EditText app_1_a_2;
-    private EditText app_1_a_3;
     private String appName;
     private Context context;
     private ImageView app_icon;
     private DiscreteSeekBar bar_1;
     private DiscreteSeekBar bar_2;
     private DiscreteSeekBar bar_3;
-    private TextView instruction_text;
     private TextView q1;
     private TextView q2;
     private TextView q3;
@@ -89,64 +85,16 @@ public class FirstAppFragment extends Fragment {
                 .withShadow().withTextColor(Color.WHITE)
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
         ToolTipView toolTipView = slider_tooltip.showToolTipForView(toolTip, view.findViewById(R.id.q1));
-        q1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                slider_tooltip.setVisibility(View.INVISIBLE);
-
-            }
-        });
         getValuesFromBars();
-
         setBarsColor();
-
-//        instruction_text.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//
-//            public void onClick(View v) {
-//                instruction_text.setVisibility(View.GONE);
-//
-//
-//            }
-//        });
         this.context = context;
-
 
         go_to_next_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!(q1_value == 0) && !(q2_value == 0) && !(q3_value == 0)) {
 
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
-                    query.include("User");
-                    query.whereEqualTo("User", ParseUser.getCurrentUser());
-                    query.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(final List<ParseObject> list, ParseException e) {
-                            if (e == null) {
-                                if (list.size() < 3) {
-                                    ParseObject voteForUser = ParseObject.create("Vote");
-                                    voteForUser.put("User", ParseUser.getCurrentUser());
-                                    voteForUser.put("appname", appName);
-                                    voteForUser.put("design", q1_value);
-                                    voteForUser.put("performance", q2_value);
-                                    voteForUser.put("intuitivity", q3_value);
-                                    voteForUser.saveInBackground(new SaveCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-                                            Log.i(appName, "data has been saved for " + appName);
-                                            int objectsInParse = list.size() + 1;
-                                            Log.i("amount of apps saved to parse", objectsInParse + "");
-                                        }
-                                    });
-                                }
-                            } else {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    });
+                    ((MainActivity) getActivity()).setDataForFirstApp(appName, q1_value, q2_value, q3_value);
                     ((MainActivity) getActivity()).putTextFieldInvisible();
                     ((MainActivity) getActivity()).selectSecondAppFragment(v);
                 } else {
@@ -163,7 +111,6 @@ public class FirstAppFragment extends Fragment {
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
-
 
     public void setBarsColor() {
         bar_1.setTrackColor(Color.parseColor("#FF1D4D"));
@@ -185,6 +132,8 @@ public class FirstAppFragment extends Fragment {
             @Override
             public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
                 q1_value = value;
+                slider_tooltip.setVisibility(View.INVISIBLE);
+
             }
 
             @Override

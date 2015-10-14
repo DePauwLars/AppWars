@@ -1,6 +1,8 @@
 package appwars.appwise.be.appwars.activities;
 
 import android.app.Application;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.View;
 import com.facebook.login.LoginManager;
 
 import appwars.appwise.be.appwars.R;
+import appwars.appwise.be.appwars.fragments.ThirdAppFragment;
 
 public class EndActivity extends AppCompatActivity {
 
