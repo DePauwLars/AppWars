@@ -50,10 +50,12 @@ public class AppListFragment extends Fragment {
     }
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity) getActivity()).initializeAppsFromListToZero();
+        ((MainActivity) getActivity()).putTextFieldVisible();
         ((MainActivity) getActivity()).initializeAppIconsFromListToZero();
     }
 
@@ -63,6 +65,7 @@ public class AppListFragment extends Fragment {
         appListRecyclerView = (RecyclerView) view.findViewById(R.id.app_list_recycler_view);
         go_to_next_fragment = (Button) view.findViewById(R.id.go_to_next_fragment);
         ((MainActivity) getActivity()).initializeAppIconsFromListToZero();
+        ((MainActivity) getActivity()).putTextFieldVisible();
         go_to_next_fragment.setVisibility(View.GONE);
         go_to_next_fragment.setOnClickListener(new View.OnClickListener() {
             @Override

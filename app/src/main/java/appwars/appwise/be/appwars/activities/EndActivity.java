@@ -21,6 +21,14 @@ public class EndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();  
+        finish();
+
+    }
+
     public void logOut(View view) {
         LoginManager.getInstance().logOut();
     }

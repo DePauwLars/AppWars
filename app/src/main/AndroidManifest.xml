@@ -58,8 +58,8 @@
 
         <activity
             android:screenOrientation="portrait"
-            android:name=".activities.MainActivity"
-            android:label="Appwars" >
+            android:label="App Awards"
+            android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

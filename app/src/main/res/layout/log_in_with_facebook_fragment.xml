@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
+    android:background="#FF1D4D"
     android:orientation="vertical">
 
     <TextView
@@ -10,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_weight="0.7"
-        android:background="#4285f4"
+        android:background="#FF1d4d"
 
         android:gravity="center_horizontal"
         android:paddingTop="70dp"
@@ -30,9 +31,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:textColor="#FFFFFF"
             android:onClick="signInWithFacebook"
             android:paddingTop="90dp"
-            android:text="Click here to go to the facebook log in."
+            android:text="Tap your screen to go to the facebook log in."
             android:textSize="20sp" />
 
         <View

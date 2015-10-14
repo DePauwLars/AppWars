@@ -67,9 +67,11 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkNumberOfVotesForUser();
         setContentView(R.layout.activity_main);
         view = getWindow().getDecorView().getRootView();
         textView = (TextView) view.findViewById(R.id.welcome_textview);
+        textView.setVisibility(View.VISIBLE);
         FrameLayout frame_layout = (FrameLayout) findViewById(R.id.frame_layout);
         permissions = new ArrayList<>();
         appsFromList = new ArrayList<>();
@@ -77,10 +79,9 @@ public class MainActivity extends FragmentActivity {
         addPermissionsToList();
         ParseUser user = ParseUser.getCurrentUser();
         if (user == null) {
-            putTextFieldInvisible();
+//            putTextFieldInvisible();
             selectFacebookLoginFragment(view);
         } else {
-            putTextFieldVisible();
             selectAppListFragment(view);
         }
     }
@@ -186,11 +187,14 @@ public class MainActivity extends FragmentActivity {
                         @Override
                         public void done(List<ParseObject> list, ParseException e) {
                             if (e == null) {
-                                if (list.size() < 3) {
+                                if (list.size() == 0) {
                                     Log.d("Appwars", "User logged in through Facebook!");
                                     selectAppListFragment(view);
                                 } else {
-                                    Toast.makeText(getBaseContext(), "You've already voted.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getBaseContext(), EndActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             } else {
                                 e.printStackTrace();
@@ -283,9 +287,14 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void done(final List<ParseObject> list, ParseException e) {
                 if (e == null) {
-/*
-todo: if user has voted, refer them to activity saying so.
- */
+                    if (list.size() > 0) {
+                        Intent intent = new Intent(getBaseContext(), EndActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                    }
+
                 } else {
                     e.printStackTrace();
                 }

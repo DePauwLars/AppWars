@@ -87,7 +87,7 @@ public class ThirdAppFragment extends Fragment {
                     ((MainActivity) getActivity()).commitAnswersToParse();
                     Intent intent = new Intent(getContext(), EndActivity.class);
                     startActivity(intent);
-                    getActivity().finish();
+                    ((MainActivity)getActivity()).finish();
                 } else {
                     Toast.makeText(getContext(), "Please fill in  your answers before continuing.", Toast.LENGTH_SHORT).show();
                 }
