@@ -1,7 +1,9 @@
 package appwars.appwise.be.appwars.activities;
 
+import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -36,6 +38,9 @@ import appwars.appwise.be.appwars.fragments.SecondAppFragment;
 import appwars.appwise.be.appwars.fragments.ThirdAppFragment;
 
 public class MainActivity extends FragmentActivity {
+    private boolean listFragIsShowed;
+    private FragmentManager fm;
+
     private String app1;
     private String app2;
     private String app3;
@@ -67,6 +72,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fm = getSupportFragmentManager();
         checkNumberOfVotesForUser();
         setContentView(R.layout.activity_main);
         view = getWindow().getDecorView().getRootView();
@@ -77,14 +83,16 @@ public class MainActivity extends FragmentActivity {
         appsFromList = new ArrayList<>();
         appIcons = new ArrayList<>();
         addPermissionsToList();
+        listFragIsShowed = false;
         ParseUser user = ParseUser.getCurrentUser();
         if (user == null) {
-//            putTextFieldInvisible();
             selectFacebookLoginFragment(view);
         } else {
             selectAppListFragment(view);
+            listFragIsShowed = true;
         }
     }
+
 
     public void getFirstAndLastName() {
         Profile profile = Profile.getCurrentProfile();
@@ -93,31 +101,27 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void selectAppListFragment(View view) {
-        FragmentManager fm = getSupportFragmentManager();
+        listFragIsShowed = true;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, AppListFragment.newInstance());
-        fragmentTransaction.addToBackStack("main_to_list");
+        fragmentTransaction.replace(R.id.frame_layout, AppListFragment.newInstance(), "list");
         fragmentTransaction.commit();
     }
 
     public void selectFacebookLoginFragment(View view) {
-        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, LogInWithFacebookFragment.newInstance());
         fragmentTransaction.commit();
     }
 
     public void selectFirstAppFragment(View view) {
-        FragmentManager fm = getSupportFragmentManager();
+        listFragIsShowed = false;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, FirstAppFragment.newInstance());
         fragmentTransaction.addToBackStack("list_to_first");
-
         fragmentTransaction.commit();
     }
 
     public void selectSecondAppFragment(View view) {
-        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, SecondAppFragment.newInstance());
         fragmentTransaction.addToBackStack("first_to_second");
@@ -125,7 +129,6 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void selectThirdAppFragment(View view) {
-        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, ThirdAppFragment.newInstance());
         fragmentTransaction.addToBackStack("second_to_third");

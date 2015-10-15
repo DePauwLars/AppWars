@@ -29,9 +29,6 @@ import appwars.appwise.be.appwars.activities.MainActivity;
 import appwars.appwise.be.appwars.utils.PackageInformation;
 import appwars.appwise.be.appwars.R;
 
-/**
- * Created by Lakkedelakke on 5/10/2015.
- */
 public class AppListFragment extends Fragment {
     private String title;
     private int page;
@@ -48,8 +45,6 @@ public class AppListFragment extends Fragment {
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
