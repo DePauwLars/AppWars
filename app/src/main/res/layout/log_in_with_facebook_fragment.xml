@@ -14,32 +14,30 @@
         android:background="#FF1d4d"
 
         android:gravity="center_horizontal"
-        android:paddingTop="70dp"
-        android:text="Sign in with facebook"
+        android:paddingTop="50dp"
+        android:text="Click the button to to go the Facebook login"
         android:textColor="#FFFFFF"
         android:textSize="30sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2"
         android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:onClick="signInWithFacebook"
-            android:paddingTop="90dp"
-            android:text="Tap your screen to go to the facebook log in."
-            android:textSize="20sp" />
+            android:src="@drawable/appwars"/>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
+
+
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="signInWithFacebook "
+            android:src="@drawable/facebook"/>
     </LinearLayout>
 </LinearLayout>
