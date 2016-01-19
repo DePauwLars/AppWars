@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
+import android.support.annotation.BinderThread;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,16 +31,15 @@ import appwars.appwise.be.appwars.App;
 import appwars.appwise.be.appwars.activities.MainActivity;
 import appwars.appwise.be.appwars.utils.PackageInformation;
 import appwars.appwise.be.appwars.R;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class AppListFragment extends Fragment {
-    private String title;
-    private int page;
-    private RecyclerView appListRecyclerView;
-    private AppListAdapter appListAdapter;
-    private RecyclerView.LayoutManager appListLayoutLManager;
-    private List<App> apps;
-    private Button go_to_next_fragment;
 
+    private List<App> apps;
+
+    @Bind(R.id.app_list_recycler_view) RecyclerView appListRecyclerView;
+    @Bind(R.id.go_to_next_fragment) Button go_to_next_fragment;
 
     public static AppListFragment newInstance() {
         AppListFragment fragmentFirst = new AppListFragment();
@@ -52,15 +54,18 @@ public class AppListFragment extends Fragment {
         ((MainActivity) getActivity()).initializeAppsFromListToZero();
         ((MainActivity) getActivity()).putTextFieldVisible();
         ((MainActivity) getActivity()).initializeAppIconsFromListToZero();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.app_list_fragment_layout, container, false);
-        appListRecyclerView = (RecyclerView) view.findViewById(R.id.app_list_recycler_view);
-        go_to_next_fragment = (Button) view.findViewById(R.id.go_to_next_fragment);
+        ButterKnife.bind(this, view);
+
+
         ((MainActivity) getActivity()).initializeAppIconsFromListToZero();
         ((MainActivity) getActivity()).putTextFieldVisible();
+
         go_to_next_fragment.setVisibility(View.GONE);
         go_to_next_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +76,10 @@ public class AppListFragment extends Fragment {
         });
 
         apps = new ArrayList<>();
-
         apps = getAllUserInstalledApps();
 
-        appListLayoutLManager = new LinearLayoutManager(getContext());
-        appListAdapter = new AppListAdapter(apps, getContext());
+        RecyclerView.LayoutManager appListLayoutLManager = new LinearLayoutManager(getContext());
+        AppListAdapter appListAdapter = new AppListAdapter(apps, getContext());
         appListRecyclerView.setLayoutManager(appListLayoutLManager);
         appListRecyclerView.setAdapter(appListAdapter);
         return view;
@@ -197,17 +201,17 @@ public class AppListFragment extends Fragment {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
+            @Bind(R.id.app_name) TextView appNameTextView;
 
-            public TextView appNameTextView;
-            public ImageView appIconImageView;
-            public CheckBox appCheckBox;
+            @Bind(R.id.app_icon)
+            ImageView appIconImageView;
+
+            @Bind(R.id.checkbox)
+            CheckBox appCheckBox;
 
             public ViewHolder(final View v) {
                 super(v);
-                appNameTextView = (TextView) v.findViewById(R.id.app_name);
-                appIconImageView = (ImageView) v.findViewById(R.id.app_icon);
-                appCheckBox = (CheckBox) v.findViewById(R.id.checkbox);
-
+                ButterKnife.bind(this, v);
             }
         }
     }

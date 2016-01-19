@@ -6,13 +6,16 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
 
-    </style>
+
+        <style name="Theme.AppCompat.Light.NoActionBar">
+            <item name="android:statusBarColor">@android:color/transparent</item>
+            <item name="android:navigationBarColor">@android:color/transparent</item>
+            <item name="windowActionBar">false</item>
+            <item name="windowNoTitle">true</item>
+
+        </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

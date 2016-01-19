@@ -1,21 +1,16 @@
 package appwars.appwise.be.appwars.activities;
 
-import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.parse.FindCallback;
@@ -27,6 +22,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +33,8 @@ import appwars.appwise.be.appwars.fragments.FirstAppFragment;
 import appwars.appwise.be.appwars.fragments.LogInWithFacebookFragment;
 import appwars.appwise.be.appwars.fragments.SecondAppFragment;
 import appwars.appwise.be.appwars.fragments.ThirdAppFragment;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainActivity extends FragmentActivity {
     private boolean listFragIsShowed;
@@ -56,35 +55,33 @@ public class MainActivity extends FragmentActivity {
     private int a1_a3;
     private int a2_a3;
     private int a3_a3;
-    private String first_name;
-    private String last_name;
-    private FragmentPagerAdapter adapterViewPager;
+
     private List<String> appsFromList;
     private List<Drawable> appIcons;
-    private ParseUser currentUser;
-    private String userObjectId;
+
     private List<String> permissions;
-    private TextView facebookLogInTextView;
+
+    @Bind(R.id.welcome_textview)
+    TextView textView;
+
     private View view;
-    private TextView textView;
-    private AppListFragment appListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fm = getSupportFragmentManager();
-        checkNumberOfVotesForUser();
         setContentView(R.layout.activity_main);
         view = getWindow().getDecorView().getRootView();
-        textView = (TextView) view.findViewById(R.id.welcome_textview);
+        ButterKnife.bind(this);
+        fm = getSupportFragmentManager();
+        checkNumberOfVotesForUser();
+
         textView.setVisibility(View.VISIBLE);
-        FrameLayout frame_layout = (FrameLayout) findViewById(R.id.frame_layout);
         permissions = new ArrayList<>();
         appsFromList = new ArrayList<>();
         appIcons = new ArrayList<>();
-        addPermissionsToList();
         listFragIsShowed = false;
         ParseUser user = ParseUser.getCurrentUser();
+
         if (user == null) {
             selectFacebookLoginFragment(view);
         } else {
@@ -93,17 +90,10 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-
-    public void getFirstAndLastName() {
-        Profile profile = Profile.getCurrentProfile();
-        first_name = profile.getFirstName();
-        last_name = profile.getLastName();
-    }
-
     public void selectAppListFragment(View view) {
         listFragIsShowed = true;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, AppListFragment.newInstance(), "list");
+        fragmentTransaction.replace(R.id.frame_layout, AppListFragment.newInstance(), AppListFragment.class.getSimpleName());
         fragmentTransaction.commit();
     }
 
@@ -117,21 +107,21 @@ public class MainActivity extends FragmentActivity {
         listFragIsShowed = false;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, FirstAppFragment.newInstance());
-        fragmentTransaction.addToBackStack("list_to_first");
+        fragmentTransaction.addToBackStack(FirstAppFragment.class.getSimpleName());
         fragmentTransaction.commit();
     }
 
     public void selectSecondAppFragment(View view) {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, SecondAppFragment.newInstance());
-        fragmentTransaction.addToBackStack("first_to_second");
+        fragmentTransaction.addToBackStack(SecondAppFragment.class.getSimpleName());
         fragmentTransaction.commit();
     }
 
     public void selectThirdAppFragment(View view) {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, ThirdAppFragment.newInstance());
-        fragmentTransaction.addToBackStack("second_to_third");
+        fragmentTransaction.addToBackStack(ThirdAppFragment.class.getSimpleName());
         fragmentTransaction.commit();
     }
 
@@ -168,47 +158,6 @@ public class MainActivity extends FragmentActivity {
         return appsFromList.get(position);
     }
 
-    public String getUserObjectId(View view) {
-        return userObjectId;
-    }
-
-
-    public void signInWithFacebook(final View view) {
-        LoginManager loginManager = LoginManager.getInstance();
-        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException err) {
-                if (user == null) {
-                    Log.d("Appwars", "Uh oh. The user cancelled the Facebook login.");
-                } else if (user.isNew()) {
-                    Log.d("Appwars", "User signed up and logged in through Facebook!");
-                } else {
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
-                    query.include("User");
-                    query.whereEqualTo("User", ParseUser.getCurrentUser());
-                    query.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(List<ParseObject> list, ParseException e) {
-                            if (e == null) {
-                                if (list.size() == 0) {
-                                    Log.d("Appwars", "User logged in through Facebook!");
-                                    selectAppListFragment(view);
-                                } else {
-                                    Intent intent = new Intent(getBaseContext(), EndActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            } else {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -225,13 +174,6 @@ public class MainActivity extends FragmentActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void addPermissionsToList() {
-        permissions.add("public_profile");
-        permissions.add("email");
-        permissions.add("user_status");
-        permissions.add("user_friends");
     }
 
     public void putTextFieldInvisible() {

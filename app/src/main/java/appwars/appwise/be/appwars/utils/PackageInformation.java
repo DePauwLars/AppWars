@@ -8,9 +8,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Lakkedelakke on 6/10/2015.
- */
+
+    /* code snippet, niet mijn eigen code */
 public class PackageInformation {
 
     private Context mContext;

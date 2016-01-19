@@ -33,7 +33,6 @@ public class EndActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-
     }
 
     public void logOut(View view) {

@@ -19,8 +19,5 @@ public class AppwarsApplication extends Application {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "EwpRSwAKLtGHsde2mE6jVgdVPU6GhlLsUTW0eoby", "1nzDVOacRcGJaVJgOMYiIt9c0yC9fTJCtga26vQU");
         ParseFacebookUtils.initialize(this);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
-
 }

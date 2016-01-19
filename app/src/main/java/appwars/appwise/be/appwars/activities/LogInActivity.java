@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
@@ -19,25 +20,31 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import appwars.appwise.be.appwars.R;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class LogInActivity extends AppCompatActivity {
+    @Bind(R.id.facebookLogInTextView) TextView facebookLogInTextView;
     private List<String> permissions;
-    private TextView facebookLogInTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_log_in);
+        ButterKnife.bind(this);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
-        facebookLogInTextView = (TextView) findViewById(R.id.facebookLogInTextView);
         permissions = new ArrayList<>();
-        addPermissionsToList();
-        signInWithFacebook();
+
+        ParseUser user = ParseUser.getCurrentUser();
+        if (user == null) {
+            signInWithFacebook();
+        }
     }
 
 
@@ -68,7 +75,6 @@ public class LogInActivity extends AppCompatActivity {
                             } else {
                                 e.printStackTrace();
                             }
-
                         }
                     });
                 }
@@ -94,11 +100,5 @@ public class LogInActivity extends AppCompatActivity {
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void addPermissionsToList() {
 
-        permissions.add("public_profile");
-        permissions.add("email");
-        permissions.add("user_status");
-        permissions.add("user_friends");
-    }
 }

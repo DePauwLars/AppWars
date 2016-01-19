@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import appwars.appwise.be.appwars.R;
+import appwars.appwise.be.appwars.activities.LogInActivity;
 import appwars.appwise.be.appwars.activities.MainActivity;
 
 public class LogInWithFacebookFragment extends Fragment {
@@ -19,7 +20,7 @@ public class LogInWithFacebookFragment extends Fragment {
         facebook_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).signInWithFacebook(v);
+                ((LogInActivity)getActivity()).signInWithFacebook();
             }
         });
 
